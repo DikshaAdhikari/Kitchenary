@@ -8,20 +8,22 @@ import { Subject } from 'rxjs';
 export class RecipeService {
   recipesChanged = new Subject<Recipe[]>();
 
-  private recipes: Recipe[] = [
-    new Recipe(
-      'Tasty Milkshake',
-      'A super-tasty Milkshake - just awesome!',
-      'https://tse1.mm.bing.net/th?id=OIP.5A6fxhYidLPoqy9KNkWTMgHaLH&pid=Api&P=0&w=110&h=165',
-      [new Ingredient('Milk', 1), new Ingredient('Cookies', 20)]
-    ),
-    new Recipe(
-      'Big Fat Burger',
-      'What else you need to say?',
-      'https://tse4.mm.bing.net/th?id=OIP.Qo_gq80KJRzjIvimTz9wUwHaHa&pid=Api&P=0&w=172&h=172',
-      [new Ingredient('Buns', 2), new Ingredient('Meat', 1)]
-    )
-  ];
+  // private recipes: Recipe[] = [
+  //   new Recipe(
+  //     'Tasty Milkshake',
+  //     'A super-tasty Milkshake - just awesome!',
+  //     'https://blog.guadaim.com.br/wp-content/uploads/2016/12/milk-shake-conheca-a-historia-da-bebida-e-como-fazer-para-vender-810x540.jpeg',
+  //     [new Ingredient('Milk', 1), new Ingredient('Cookies', 20)]
+  //   ),
+  //   new Recipe(
+  //     'Big Fat Burger',
+  //     'What else you need to say?',
+  //     'https://blog-cdn.eduk.com.br/wp-content/uploads/sites/3/2016/08/18130620/hamburguer_shutterstock.jpg',
+  //     [new Ingredient('Buns', 2), new Ingredient('Meat', 1)]
+  //   )
+  // ];
+
+  private recipes: Recipe[] = [];
 
   constructor(private shoppingListService: ShoppingListService) {}
 
@@ -39,6 +41,11 @@ export class RecipeService {
 
   addRecipe(recipe: Recipe) {
     this.recipes.push(recipe);
+    this.recipesChanged.next(this.recipes.slice());
+  }
+
+  setRecipes(recipes: Recipe[]) {
+    this.recipes = recipes;
     this.recipesChanged.next(this.recipes.slice());
   }
 
